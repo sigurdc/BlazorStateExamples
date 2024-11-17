@@ -1,4 +1,12 @@
-﻿@inherits LayoutComponentBase
+﻿@using System.ComponentModel
+@using StateExamples.Client.State
+@inherits LayoutComponentBase
+
+@inject PersonStateBasic PersonStateBasic
+@inject PersonStateIntermediate PersonStateIntermediate
+@inject PersonStateAdvanced PersonStateAdvanced
+
+@implements IDisposable
 
 <div class="page">
     <div class="sidebar">
@@ -7,6 +15,13 @@
 
     <main>
         <div class="top-row px-4">
+            <h4>@PersonStateAdvanced.GetCurrentPerson().Name</h4>
+            &nbsp;
+            &nbsp;
+            <h4>@PersonStateIntermediate.CurrentPerson.Name</h4>
+            &nbsp;
+            &nbsp;
+            <h4>@PersonStateBasic.CurrentPerson.Name</h4>
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
 
@@ -21,3 +36,31 @@
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        PersonStateIntermediate.OnChange += StateHasChanged;
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        PersonStateAdvanced.PropertyChanged += OnHandler;
+        await base.OnInitializedAsync();
+    }
+
+    private async void OnHandler(object? s, PropertyChangedEventArgs e)
+    {
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        PersonStateIntermediate.OnChange -= StateHasChanged;
+        PersonStateAdvanced.PropertyChanged -= OnHandler;
+    }
+    
+    
+
+}

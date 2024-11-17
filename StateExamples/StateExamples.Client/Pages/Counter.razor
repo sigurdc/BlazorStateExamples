@@ -1,19 +1,55 @@
 ﻿@page "/counter"
+@using StateExamples.Client.State
+
+@inject PersonStateBasic PersonStateBasic
+@inject PersonStateIntermediate PersonStateIntermediate
+@inject PersonStateAdvanced PersonStateAdvanced
 
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @currentCount</p>
+<p role="status">Current count: @_currentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<EditForm Model="PersonStateBasic.CurrentPerson">
+
+    <div>
+        <label for="basic">Basic without update</label>
+        <InputText ID="basic" @bind-Value="@PersonStateBasic.CurrentPerson.Name"/>
+    </div>
+
+    <div>
+        <label for="intermediate">Intermediate with StateHasChanged updates</label>
+        <InputText
+            ID="intermediate"
+            Value="@PersonStateIntermediate.CurrentPerson.Name"
+            ValueExpression="() => PersonStateIntermediate.CurrentPerson.Name"
+            ValueChanged="HandleNameChange"/>
+    </div>
+    
+    <div>
+        <label for="advanced">Advanced with INotifyPropertyChanged</label>
+        <InputText
+            ID="advanced"
+            Value="@PersonStateAdvanced.GetCurrentPerson().Name"
+            ValueExpression="() => PersonStateIntermediate.CurrentPerson.Name"
+            ValueChanged="PersonStateAdvanced.UpdateCurrentPersonName"/>
+    </div>
+</EditForm>
+
 @code {
-    private int currentCount = 0;
+    private int _currentCount;
 
     private void IncrementCount()
     {
-        currentCount++;
+        _currentCount++;
+    }
+
+    private void HandleNameChange(string obj)
+    {
+        PersonStateIntermediate.UpdateCurrentPersonName(obj);
     }
 
 }
