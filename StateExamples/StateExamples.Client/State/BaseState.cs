@@ -5,7 +5,7 @@ namespace StateExamples.Client.State;
 
 public abstract class BaseState<T>(T state) : INotifyPropertyChanged
 {
-    protected T State { get; } = state;
+    public T State { get; } = state;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

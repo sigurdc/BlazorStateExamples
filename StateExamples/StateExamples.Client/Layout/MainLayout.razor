@@ -1,4 +1,5 @@
 ﻿@using System.ComponentModel
+@using StateExamples.Client.Models
 @using StateExamples.Client.State
 @inherits LayoutComponentBase
 
@@ -15,7 +16,7 @@
 
     <main>
         <div class="top-row px-4">
-            <h4>@PersonStateAdvanced.GetCurrentPerson().Name</h4>
+            <h4>@PersonStateAdvanced.State</h4>
             &nbsp;
             &nbsp;
             <h4>@PersonStateIntermediate.CurrentPerson.Name</h4>

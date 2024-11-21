@@ -33,7 +33,7 @@
         <label for="advanced">Advanced with INotifyPropertyChanged</label>
         <InputText
             ID="advanced"
-            Value="@PersonStateAdvanced.GetCurrentPerson().Name"
+            Value="@PersonStateAdvanced.State.Name"
             ValueExpression="() => PersonStateIntermediate.CurrentPerson.Name"
             ValueChanged="PersonStateAdvanced.UpdateCurrentPersonName"/>
     </div>

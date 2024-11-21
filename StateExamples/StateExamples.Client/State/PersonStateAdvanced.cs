@@ -13,9 +13,9 @@ public class PersonStateAdvanced() : BaseState<Person>(new Person
         OnPropertyChanged();
     }
 
-    public Person GetCurrentPerson()
-    {
-        return State;
-    }
+    // public Person GetCurrentPerson()
+    // {
+    //     return State;
+    // }
     
 }
