@@ -3,7 +3,7 @@
 
 @inject PersonStateBasic PersonStateBasic
 @inject PersonStateIntermediate PersonStateIntermediate
-@inject PersonStateAdvanced PersonStateAdvanced
+@inject PersonStateINotify PersonStateINotify
 
 <PageTitle>Counter</PageTitle>
 
@@ -26,16 +26,18 @@
             ID="intermediate"
             Value="@PersonStateIntermediate.CurrentPerson.Name"
             ValueExpression="() => PersonStateIntermediate.CurrentPerson.Name"
-            ValueChanged="HandleNameChange"/>
+            ValueChanged="HandleNameChange"
+        />
+        @* @bind-Value="PersonStateIntermediate.CurrentPerson.Name" *@
     </div>
-    
+
     <div>
-        <label for="advanced">Advanced with INotifyPropertyChanged</label>
+        <label for="advanced">Advanced variant with INotifyPropertyChanged</label>
         <InputText
             ID="advanced"
-            Value="@PersonStateAdvanced.State.Name"
+            Value="@PersonStateINotify.State.Name"
             ValueExpression="() => PersonStateIntermediate.CurrentPerson.Name"
-            ValueChanged="PersonStateAdvanced.UpdateCurrentPersonName"/>
+            ValueChanged="PersonStateINotify.UpdateCurrentPersonName"/>
     </div>
 </EditForm>
 

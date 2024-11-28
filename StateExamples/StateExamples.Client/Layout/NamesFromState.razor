@@ -1,0 +1,44 @@
+@using System.ComponentModel
+@using StateExamples.Client.State
+
+@inject PersonStateBasic PersonStateBasic
+@inject PersonStateIntermediate PersonStateIntermediate
+@inject PersonStateINotify PersonStateINotify
+
+@implements IDisposable
+
+<h4>3: @PersonStateINotify.State.Name</h4>
+&nbsp;
+&nbsp;
+<h4>2: @PersonStateIntermediate.CurrentPerson.Name</h4>
+&nbsp;
+&nbsp;
+<h4>1: @PersonStateBasic.CurrentPerson.Name</h4>
+
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        PersonStateIntermediate.OnChange += StateHasChanged;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        PersonStateINotify.PropertyChanged += OnHandler;
+        await base.OnInitializedAsync();
+    }
+
+    private async void OnHandler(object? s, PropertyChangedEventArgs e)
+    {
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        PersonStateIntermediate.OnChange -= StateHasChanged;
+        PersonStateINotify.PropertyChanged -= OnHandler;
+    }
+
+
+}

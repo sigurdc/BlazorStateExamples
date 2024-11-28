@@ -2,7 +2,7 @@ using StateExamples.Client.Models;
 
 namespace StateExamples.Client.State;
 
-public class PersonStateAdvanced() : BaseState<Person>(new Person
+public class PersonStateINotify() : BaseState<Person>(new Person
 {
     Name = "Sigurd"
 })
